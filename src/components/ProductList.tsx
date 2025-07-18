@@ -2,6 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Table, Button, Image, Tag } from "antd";
 import axios from "axios";
+import Header from "./Header";
+
 
 interface Product {
   id: number;
@@ -97,7 +99,10 @@ const ProductList: React.FC = () => {
   if (error) return <p>Có lỗi xảy ra: {(error as Error).message}</p>;
 
   return (
+
+    
     <div style={{ padding: 20 }}>
+       <Header />
       <h2 style={{ marginBottom: 16 }}>Danh sách áo bóng đá</h2>
       <Button
         type="primary"

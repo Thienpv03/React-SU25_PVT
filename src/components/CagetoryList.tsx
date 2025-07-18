@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
+import Header from "./Header";
 
 function CategoryList() {
   const fetchCategories = async () => {
@@ -25,6 +26,7 @@ function CategoryList() {
 
   return (
     <div>
+       <Header />
       <Table
         dataSource={data}
         columns={columns}
