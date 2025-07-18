@@ -1,0 +1,43 @@
+{
+  "brands": [
+    { "id": 1, "name": "Manchester United" },
+    { "id": 2, "name": "Real Madrid" },
+    { "id": 3, "name": "Barcelona" },
+    { "id": 4, "name": "Bayern Munich" },
+    { "id": 5, "name": "Paris Saint-Germain" }
+  ],
+  "categories": [
+    { "id": 1, "name": "Premier League" },
+    { "id": 2, "name": "La Liga" },
+    { "id": 3, "name": "Bundesliga" },
+    { "id": 4, "name": "Ligue 1" },
+    { "id": 5, "name": "Serie A" },
+    { "id": 6, "name": "Đội tuyển quốc gia" }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Áo Manchester United 2024",
+      "price": 550000,
+      "description": "Áo sân nhà MU mùa giải 2024",
+      "image": "https://example.com/images/mu-2024.jpg",
+      "brandId": 1,
+      "brand": { "id": 1, "name": "Manchester United" },   
+      "categoryId": 1,
+      "size": ["S", "M", "L", "XL"],
+      "stock": 20
+    },
+    {
+      "id": 2,
+      "name": "Áo Real Madrid Sân Nhà 2024",
+      "price": 600000,
+      "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
+      "image": "https://example.com/images/real-2024.jpg",
+      "brandId": 2,
+      "brand": { "id": 2, "name": "Real Madrid" },          
+      "categoryId": 2,
+      "size": ["M", "L", "XL"],
+      "stock": 15
+    }
+  ]
+}
