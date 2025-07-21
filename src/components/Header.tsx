@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // <- import
-import { UnorderedListOutlined, HomeOutlined, ShopFilled } from '@ant-design/icons';
+import { UnorderedListOutlined, HomeOutlined, ShopFilled, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
@@ -28,13 +28,11 @@ const items: MenuItem[] = [
     icon: <UnorderedListOutlined />,
   },
   {
-    key: 'link',
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        External Link
-      </a>
-    ),
+    label: 'Users',
+    key: '/users',
+    icon: <UserOutlined />,
   },
+  
 ];
 
 const App: React.FC = () => {

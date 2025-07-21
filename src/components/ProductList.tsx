@@ -93,6 +93,15 @@ const ProductList: React.FC = () => {
           <span style={{ color: "red" }}>Hết hàng</span>
         ),
     },
+    {
+      title: "Chi tiết",
+      key: "action",
+      render: (_: any, record: { id: any; }) => (
+        <Button type="link" href={`/products/${record.id}`}>
+          Xem chi tiết
+        </Button>
+      ),
+    }
   ];
 
   if (isLoading) return <p>Đang tải dữ liệu...</p>;
@@ -104,14 +113,7 @@ const ProductList: React.FC = () => {
     <div style={{ padding: 20 }}>
        <Header />
       <h2 style={{ marginBottom: 16 }}>Danh sách áo bóng đá</h2>
-      <Button
-        type="primary"
-        onClick={() => refetch()}
-        style={{ marginBottom: 16 }}
-        disabled={isLoading}
-      >
-        Làm mới dữ liệu
-      </Button>
+      
       <Table
         dataSource={products}
         columns={columns}

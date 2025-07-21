@@ -27,6 +27,7 @@ function CategoryList() {
   return (
     <div>
        <Header />
+       <h2 style={{ marginBottom: 16 }}>Danh sách danh mục</h2>
       <Table
         dataSource={data}
         columns={columns}

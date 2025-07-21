@@ -6,6 +6,14 @@
     { "id": 4, "name": "Bayern Munich" },
     { "id": 5, "name": "Paris Saint-Germain" }
   ],
+  
+  "users": [
+    { "id": 1, "name": "Nguyễn Văn A", "email": "a@gmail.com", "role": "admin" },
+    { "id": 2, "name": "Trần Thị B", "email": "b@gmail.com", "role": "customer" },
+    { "id": 3, "name": "Lê Văn C", "email": "c@gmail.com", "role": "customer" }
+  ],
+
+
   "categories": [
     { "id": 1, "name": "Premier League" },
     { "id": 2, "name": "La Liga" },

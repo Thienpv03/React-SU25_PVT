@@ -4,6 +4,8 @@ import CategoryList from "./components/CagetoryList";
 import BrandList from "./components/BrandList";
 import  Header  from "./components/Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProductDetail from "./components/ProductDetail";
+import UserList from "./components/UserList";
 
 function App() {
   const router =  createBrowserRouter([
@@ -22,6 +24,14 @@ function App() {
     {
       path : "/brands",
       element : <BrandList/>,
+    },
+    {
+      path : "/products/:id",
+      element : <ProductDetail/>,
+    },
+    {
+      path : "/users",
+      element : <UserList/>,
     },
   ])
   return (
