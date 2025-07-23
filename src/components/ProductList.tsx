@@ -1,9 +1,7 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Table, Button, Image, Tag } from "antd";
-import axios from "axios";
+import { Image, Table, Tag, Input } from "antd";
 import Header from "./Header";
-
+import { Link, useSearchParams } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -20,72 +18,52 @@ interface Product {
   stock: number;
 }
 
-const fetchProducts = async (): Promise<Product[]> => {
-  const { data } = await axios.get("http://localhost:3001/products?_expand=brand");
-  return data;
-};
+function ProductList() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const name = searchParams.get("name") || "";
 
-const ProductList: React.FC = () => {
-  const {
-    data: products = [],
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["products"],
+  const fetchProducts = async (): Promise<Product[]> => {
+    const res = await fetch(
+      `http://localhost:3001/products?_expand=brand&name=${name}`
+    );
+    return res.json();
+  };
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["products", name],
     queryFn: fetchProducts,
   });
 
   const columns = [
     {
-      title: "Hình ảnh",
+      title: "ID",
+      dataIndex: "id",
+      render: (id: number) => <Link to={`/products/${id}`}>ID: {id}</Link>,
+    },
+    {
+      title: "Ảnh",
       dataIndex: "image",
-      key: "image",
-      render: (url: string) => (
-        <Image
-          src={url}
-          alt="product"
-          width={80}
-          height={80}
-          style={{ objectFit: "cover", borderRadius: 8 }}
-          placeholder
-        />
+      render: (src: string, record: Product) => (
+        <Image src={src} alt={record.name} width={100} />
       ),
     },
     {
-      title: "Tên sản phẩm",
+      title: "Tên",
       dataIndex: "name",
-      key: "name",
     },
     {
       title: "Giá",
       dataIndex: "price",
-      key: "price",
-      render: (value: number) => `${value.toLocaleString()} VND`,
-    },
-    {
-      title: "Mô tả",
-      dataIndex: "description",
-      key: "description",
+      render: (price: number) => `${price.toLocaleString()} VND`,
     },
     {
       title: "Thương hiệu",
       dataIndex: "brand",
-      key: "brand",
       render: (brand: Product["brand"]) => brand?.name ?? "Không rõ",
-    },
-
-    {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
-      render: (sizes: string[]) =>
-        sizes.map((s) => <Tag key={s}>{s}</Tag>),
     },
     {
       title: "Tồn kho",
       dataIndex: "stock",
-      key: "stock",
       render: (stock: number) =>
         stock > 0 ? (
           <span>{stock} cái</span>
@@ -94,35 +72,42 @@ const ProductList: React.FC = () => {
         ),
     },
     {
-      title: "Chi tiết",
-      key: "action",
-      render: (_: any, record: { id: any; }) => (
-        <Button type="link" href={`/products/${record.id}`}>
-          Xem chi tiết
-        </Button>
-      ),
-    }
+      title: "Size",
+      dataIndex: "size",
+      render: (sizes: string[]) => sizes.map((s) => <Tag key={s}>{s}</Tag>),
+    },
   ];
 
-  if (isLoading) return <p>Đang tải dữ liệu...</p>;
-  if (error) return <p>Có lỗi xảy ra: {(error as Error).message}</p>;
+  const onSearch = (value: string) => {
+    setSearchParams({ name: value });
+  };
 
   return (
-
-    
     <div style={{ padding: 20 }}>
-       <Header />
-      <h2 style={{ marginBottom: 16 }}>Danh sách áo bóng đá</h2>
-      
+      <Header />
+      <h2>Danh sách sản phẩm</h2>
+
+      <Input.Search
+        placeholder="Tìm sản phẩm theo tên"
+        allowClear
+        enterButton="Tìm"
+        defaultValue={name}
+        onSearch={onSearch}
+        style={{ width: 300, marginBottom: 20 }}
+      />
+
+      {error && <p>{(error as Error).message}</p>}
+
       <Table
-        dataSource={products}
+        dataSource={data}
         columns={columns}
         rowKey="id"
+        loading={isLoading}
         pagination={{ pageSize: 5 }}
         bordered
       />
     </div>
   );
-};
+}
 
 export default ProductList;
