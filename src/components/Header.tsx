@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // <- import
-import { UnorderedListOutlined, HomeOutlined, ShopFilled, UserOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined, HomeOutlined, ShopFilled, UserOutlined, FileAddOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
@@ -31,6 +31,26 @@ const items: MenuItem[] = [
     label: 'Users',
     key: '/users',
     icon: <UserOutlined />,
+  },
+  {
+    label: 'Add Product',
+    key: '/add-product',
+    icon: <FileAddOutlined />,
+  },
+  {
+    label: 'Add Category',
+    key: '/add-category',
+    icon: <FileAddOutlined />,
+  },
+  {
+    label: 'Add User',
+    key: '/add-user',
+    icon: <FileAddOutlined />,
+  },
+   {
+    label: 'Add Brand',
+    key: '/add-brand',
+    icon: <FileAddOutlined />,
   },
   
 ];

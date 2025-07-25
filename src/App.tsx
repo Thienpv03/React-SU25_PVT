@@ -6,6 +6,11 @@ import  Header  from "./components/Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductDetail from "./components/ProductDetail";
 import UserList from "./components/UserList";
+import ProductCreate from "./components/ProductCreate";
+import CategoryCreate from "./components/CategoryCreate";
+import UserCreate from "./components/UserCreate";
+import BrandCreate from "./components/BrandCreate";
+
 
 function App() {
   const router =  createBrowserRouter([
@@ -32,6 +37,22 @@ function App() {
     {
       path : "/users",
       element : <UserList/>,
+    },
+    {
+      path : "/add-product",
+      element : <ProductCreate/>,
+    },
+    {
+      path : "/add-category",
+      element : <CategoryCreate/>,
+    },
+    {
+      path : "/add-user",
+      element : <UserCreate/>,
+    },
+     {
+      path : "/add-brand",
+      element : <BrandCreate/>,
     },
   ])
   return (

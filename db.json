@@ -1,103 +1,230 @@
 {
   "brands": [
-    { "id": 1, "name": "Chealsea" },
-    { "id": 2, "name": "Real Madrid" },
-    { "id": 3, "name": "Barcelona" },
-    { "id": 4, "name": "Bayern Munich" },
-    { "id": 5, "name": "PSG" },
-    { "id": 6, "name": "AC Milan" },
-    { "id": 7, "name": "Manchester United" }
+    {
+      "id": "1",
+      "name": "Chealsea"
+    },
+    {
+      "id": "2",
+      "name": "Real Madrid"
+    },
+    {
+      "id": "3",
+      "name": "Barcelona"
+    },
+    {
+      "id": "4",
+      "name": "Bayern Munich"
+    },
+    {
+      "id": "5",
+      "name": "PSG"
+    },
+    {
+      "id": "6",
+      "name": "AC Milan"
+    },
+    {
+      "id": "7",
+      "name": "Manchester United"
+    },
+    {
+      "id": "8",
+      "name": "Manchester City"
+    },
+    {
+      "id": "d3e4",
+      "name": "nike"
+    }
   ],
-  
   "users": [
-    { "id": 1, "name": "Nguyễn Văn A", "email": "a@gmail.com", "role": "admin" },
-    { "id": 2, "name": "Trần Thị B", "email": "b@gmail.com", "role": "customer" },
-    { "id": 3, "name": "Lê Văn C", "email": "c@gmail.com", "role": "customer" }
+    {
+      "id": "1",
+      "name": "Nguyễn Văn A",
+      "email": "a@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "name": "Trần Thị B",
+      "email": "b@gmail.com",
+      "role": "customer"
+    },
+    {
+      "id": "3",
+      "name": "Lê Văn C",
+      "email": "c@gmail.com",
+      "role": "customer"
+    },
+    {
+      "id": "7402",
+      "name": "Thiên",
+      "email": "thien123@gmail.com",
+      "role": "admin"
+    }
   ],
-
-
   "categories": [
-    { "id": 1, "name": "Premier League" },
-    { "id": 2, "name": "La Liga" },
-    { "id": 3, "name": "Bundesliga" },
-    { "id": 4, "name": "Ligue 1" },
-    { "id": 5, "name": "Serie A" },
-    { "id": 6, "name": "Đội tuyển quốc gia" },
-    { "id": 7, "name": "V League" }
+    {
+      "id": "1",
+      "name": "Premier League"
+    },
+    {
+      "id": "2",
+      "name": "La Liga"
+    },
+    {
+      "id": "3",
+      "name": "Bundesliga"
+    },
+    {
+      "id": "4",
+      "name": "Ligue 1"
+    },
+    {
+      "id": "5",
+      "name": "Serie A"
+    },
+    {
+      "id": "6",
+      "name": "Đội tuyển quốc gia"
+    },
+    {
+      "id": "7",
+      "name": "V League"
+    },
+    {
+      "id": "ba68",
+      "name": "League 2"
+    }
   ],
   "products": [
-  {
-    "id": 1,
-    "name": "Áo Chelsea sân nhà 2025",
-    "price": 550000,
-    "description": "Áo sân nhà Chelsea mùa giải 2024",
-    "image": "https://example.com/images/chelsea-2025.jpg",
-    "brandId": 1,
-    "brand": { "id": 1, "name": "Chealsea" },
-    "categoryId": 1,
-    "size": ["S", "M", "L", "XL"],
-    "stock": 20
-  },
-  {
-    "id": 2,
-    "name": "Áo Real Madrid Sân Nhà 2024",
-    "price": 600000,
-    "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
-    "image": "https://example.com/images/real-2024.jpg",
-    "brandId": 2,
-    "brand": { "id": 2, "name": "Real Madrid" },
-    "categoryId": 2,
-    "size": ["M", "L", "XL"],
-    "stock": 15
-  },
-  {
-    "id": 3,
-    "name": "Áo MU 2024 Sân Khách",
-    "price": 580000,
-    "description": "Áo sân khách Manchester United mùa 2024",
-    "image": "https://example.com/images/mu-away-2024.jpg",
-    "brandId": 7,
-    "brand": { "id": 7, "name": "Manchester United" },
-    "categoryId": 1,
-    "size": ["S", "M", "L"],
-    "stock": 18
-  },
-  {
-    "id": 4,
-    "name": "Áo PSG Sân Khách 2024",
-    "price": 620000,
-    "description": "Áo PSG thiết kế hiện đại mùa giải mới",
-    "image": "https://example.com/images/psg-away-2024.jpg",
-    "brandId": 5,
-    "brand": { "id": 5, "name": "PSG" },
-    "categoryId": 4,
-    "size": ["M", "L"],
-    "stock": 10
-  },
-  {
-    "id": 5,
-    "name": "Áo AC Milan 2024",
-    "price": 610000,
-    "description": "Áo đỏ đen truyền thống của AC Milan mùa Serie A 2024",
-    "image": "https://example.com/images/acmilan-2024.jpg",
-    "brandId": 6,
-    "brand": { "id": 6, "name": "AC Milan" },
-    "categoryId": 5,
-    "size": ["S", "M", "L", "XL"],
-    "stock": 16
-  },
-  {
-    "id": 6,
-    "name": "Áo Bayern Munich Sân Nhà 2024",
-    "price": 590000,
-    "description": "Áo đỏ truyền thống của Bayern Munich mùa giải Bundesliga 2024",
-    "image": "https://example.com/images/bayern-2024.jpg",
-    "brandId": 4,
-    "brand": { "id": 4, "name": "Bayern Munich" },
-    "categoryId": 3,
-    "size": ["M", "L", "XL"],
-    "stock": 13
-  }
-]
-
+    {
+      "id": "1",
+      "name": "Áo Chelsea sân nhà 2025",
+      "price": 550000,
+      "description": "Áo sân nhà Chelsea mùa giải 2024",
+      "image": "https://example.com/images/chelsea-2025.jpg",
+      "brandId": 1,
+      "brand": {
+        "id": 1,
+        "name": "Chealsea"
+      },
+      "categoryId": 1,
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 20
+    },
+    {
+      "id": "2",
+      "name": "Áo Real Madrid Sân Nhà 2024",
+      "price": 600000,
+      "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
+      "image": "https://example.com/images/real-2024.jpg",
+      "brandId": 2,
+      "brand": {
+        "id": 2,
+        "name": "Real Madrid"
+      },
+      "categoryId": 2,
+      "size": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 15
+    },
+    {
+      "id": "3",
+      "name": "Áo MU 2024 Sân Khách",
+      "price": 580000,
+      "description": "Áo sân khách Manchester United mùa 2024",
+      "image": "https://example.com/images/mu-away-2024.jpg",
+      "brandId": 7,
+      "brand": {
+        "id": 7,
+        "name": "Manchester United"
+      },
+      "categoryId": 1,
+      "size": [
+        "S",
+        "M",
+        "L"
+      ],
+      "stock": 18
+    },
+    {
+      "id": "4",
+      "name": "Áo PSG Sân Khách 2024",
+      "price": 620000,
+      "description": "Áo PSG thiết kế hiện đại mùa giải mới",
+      "image": "https://example.com/images/psg-away-2024.jpg",
+      "brandId": 5,
+      "brand": {
+        "id": 5,
+        "name": "PSG"
+      },
+      "categoryId": 4,
+      "size": [
+        "M",
+        "L"
+      ],
+      "stock": 10
+    },
+    {
+      "id": "5",
+      "name": "Áo AC Milan 2024",
+      "price": 610000,
+      "description": "Áo đỏ đen truyền thống của AC Milan mùa Serie A 2024",
+      "image": "https://example.com/images/acmilan-2024.jpg",
+      "brandId": 6,
+      "brand": {
+        "id": 6,
+        "name": "AC Milan"
+      },
+      "categoryId": 5,
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 16
+    },
+    {
+      "id": "6",
+      "name": "Áo Bayern Munich Sân Nhà 2024",
+      "price": 590000,
+      "description": "Áo đỏ truyền thống của Bayern Munich mùa giải Bundesliga 2024",
+      "image": "https://example.com/images/bayern-2024.jpg",
+      "brandId": 4,
+      "brand": {
+        "id": 4,
+        "name": "Bayern Munich"
+      },
+      "categoryId": 3,
+      "size": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 13
+    },
+    {
+      "id": "c0ff",
+      "name": "Áo đấu MC",
+      "image": "aaa",
+      "brandId": 8,
+      "price": 540000,
+      "stock": 12,
+      "size": [
+        "S",
+        "M",
+        "L"
+      ]
+    }
+  ]
 }

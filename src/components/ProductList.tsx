@@ -72,10 +72,14 @@ function ProductList() {
         ),
     },
     {
-      title: "Size",
-      dataIndex: "size",
-      render: (sizes: string[]) => sizes.map((s) => <Tag key={s}>{s}</Tag>),
-    },
+  title: "Size",
+  dataIndex: "size",
+  render: (sizes: string[] | string) =>
+    Array.isArray(sizes)
+      ? sizes.map((s) => <Tag key={s}>{s}</Tag>)
+      : <Tag>{sizes}</Tag>,
+},
+
   ];
 
   const onSearch = (value: string) => {
