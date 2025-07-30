@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { Image, Table, Tag, Input, Button } from "antd";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
+import type { ColumnsType } from "antd/es/table";
+import { useList } from "../hooks/UseList";
 
 interface Product {
   id: number;
@@ -11,7 +12,6 @@ interface Product {
   image: string;
   brandId: number;
   brand?: {
-    id: number;
     name: string;
   };
   size: string[];
@@ -22,30 +22,21 @@ function ProductList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const name = searchParams.get("name") || "";
 
-  const fetchProducts = async (): Promise<Product[]> => {
-    const res = await fetch(
-      `http://localhost:3001/products?_expand=brand&name=${name}`
-    );
-    return res.json();
-  };
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["products", name],
-    queryFn: fetchProducts,
+  const { data, isLoading, error } = useList("products", {
+    _expand: "brand",
+    name,
   });
 
-  const columns = [
+  const columns: ColumnsType<Product> = [
     {
       title: "Số thứ tự",
       dataIndex: "id",
-      render: (id: number) => <Link to={`/products/${id}`}>#{id}</Link>,
+      render: (id) => <Link to={`/products/${id}`}>#{id}</Link>,
     },
     {
       title: "Ảnh",
       dataIndex: "image",
-      render: (src: string, record: Product) => (
-        <Image src={src} alt={record.name} width={80} />
-      ),
+      render: (src, record) => <Image src={src} alt={record.name} width={80} />,
     },
     {
       title: "Tên sản phẩm",
@@ -54,17 +45,17 @@ function ProductList() {
     {
       title: "Giá",
       dataIndex: "price",
-      render: (price: number) => `${price.toLocaleString()} VND`,
+      render: (price) => `${price.toLocaleString()} VND`,
     },
     {
       title: "Thương hiệu",
       dataIndex: "brand",
-      render: (brand: Product["brand"]) => brand?.name ?? "Không rõ",
+      render: (brand) => brand?.name ?? "Không rõ",
     },
     {
       title: "Tồn kho",
       dataIndex: "stock",
-      render: (stock: number) =>
+      render: (stock) =>
         stock > 0 ? (
           <span>{stock} cái</span>
         ) : (
@@ -74,7 +65,7 @@ function ProductList() {
     {
       title: "Size",
       dataIndex: "size",
-      render: (sizes: string[] | string) =>
+      render: (sizes) =>
         Array.isArray(sizes)
           ? sizes.map((s) => <Tag key={s}>{s}</Tag>)
           : <Tag>{sizes}</Tag>,
@@ -82,7 +73,7 @@ function ProductList() {
     {
       title: "Tùy chọn",
       key: "actions",
-      render: (record: Product) => (
+      render: (record) => (
         <div style={{ display: "flex", gap: 8 }}>
           <Link to={`/update-product/${record.id}`}>
             <Button type="primary">Sửa</Button>
@@ -114,7 +105,6 @@ function ProductList() {
           <Button type="primary">Thêm sản phẩm</Button>
         </Link>
       </div>
-
 
       <Input.Search
         placeholder="Tìm sản phẩm theo tên"

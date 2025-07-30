@@ -113,13 +113,17 @@
       "price": 550000,
       "stock": 20,
       "description": "Áo sân nhà Chelsea mùa giải 2025",
-      "brandId": 1,
+      "brandId": "7",
+      "categoryId": "1",
       "size": [
         "S",
         "M",
         "L",
         "XL"
       ],
+      "brand": {
+        "name": "Manchester United"
+      },
       "id": "1"
     },
     {
@@ -129,6 +133,9 @@
       "stock": 15,
       "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
       "brandId": 2,
+      "brand": {
+        "name": "Real Madrid"
+      },
       "size": [
         "M",
         "L"
@@ -143,7 +150,6 @@
       "image": "https://example.com/images/mu-away-2024.jpg",
       "brandId": 7,
       "brand": {
-        "id": 7,
         "name": "Manchester United"
       },
       "categoryId": 1,
@@ -162,7 +168,6 @@
       "image": "https://example.com/images/psg-away-2024.jpg",
       "brandId": 5,
       "brand": {
-        "id": 5,
         "name": "PSG"
       },
       "categoryId": 4,
@@ -180,7 +185,6 @@
       "image": "https://example.com/images/acmilan-2024.jpg",
       "brandId": 6,
       "brand": {
-        "id": 6,
         "name": "AC Milan"
       },
       "categoryId": 5,
@@ -193,14 +197,13 @@
       "stock": 16
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "Áo Bayern Munich Sân Nhà 2024",
       "price": 590000,
       "description": "Áo đỏ truyền thống của Bayern Munich mùa giải Bundesliga 2024",
       "image": "https://example.com/images/bayern-2024.jpg",
       "brandId": 4,
       "brand": {
-        "id": 4,
         "name": "Bayern Munich"
       },
       "categoryId": 3,
@@ -216,11 +219,31 @@
       "name": "Áo đấu MC",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTubpPU7SE_ypMhYI-5U0nzd_JV3SH9TzZpkw&s",
       "brandId": 8,
+      "brand": {
+        "name": "Manchester City"
+      },
       "price": 520,
       "stock": 12,
       "size": [
         "S"
       ]
+    },
+    {
+      "name": "Sách 1",
+      "image": "aaa",
+      "price": 123,
+      "stock": 2,
+      "description": "0",
+      "brandId": "8",
+      "categoryId": "6",
+      "size": [
+        "L",
+        "XL"
+      ],
+      "brand": {
+        "name": "Manchester City"
+      },
+      "id": "774e"
     }
   ]
 }

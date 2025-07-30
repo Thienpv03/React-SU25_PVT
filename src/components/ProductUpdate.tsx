@@ -18,7 +18,7 @@ function ProductUpdate() {
   const { id } = useParams();
   const nav = useNavigate();
 
-  // Lấy thông tin sản phẩm theo id
+  // Lấy thông tin sản phẩm
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
     enabled: !!id,
@@ -32,22 +32,35 @@ function ProductUpdate() {
   const { data: brands = [] } = useQuery({
     queryKey: ["brands"],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:3001/brands`);
+      const res = await axios.get("http://localhost:3001/brands");
       return res.data;
     },
   });
 
-  // Đổ dữ liệu vào form
+  // Lấy danh sách danh mục
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3001/categories");
+      return res.data;
+    },
+  });
+
+  // Set lại form khi có dữ liệu
   useEffect(() => {
     if (product) {
       form.setFieldsValue(product);
     }
   }, [product]);
 
-  // Gửi dữ liệu cập nhật
+  // Submit
   const mutation = useMutation({
     mutationFn: async (values: any) => {
-      return axios.put(`http://localhost:3001/products/${id}`, values);
+      const brand = brands.find((b: any) => b.id === values.brandId);
+      return axios.put(`http://localhost:3001/products/${id}`, {
+        ...values,
+        brand: brand ? { name: brand.name } : undefined,
+      });
     },
     onSuccess: () => {
       message.success("Cập nhật thành công!");
@@ -130,6 +143,20 @@ function ProductUpdate() {
           </Form.Item>
 
           <Form.Item
+            label="Danh mục"
+            name="categoryId"
+            rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
+          >
+            <Select placeholder="Chọn danh mục">
+              {categories.map((cat: any) => (
+                <Select.Option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
             label="Kích cỡ"
             name="size"
             rules={[{ required: true, message: "Vui lòng chọn ít nhất một size" }]}
@@ -147,8 +174,8 @@ function ProductUpdate() {
             <Button
               type="primary"
               htmlType="submit"
-              
               className="bg-blue-500"
+
             >
               Cập nhật
             </Button>

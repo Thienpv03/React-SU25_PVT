@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   Button,
   Form,
@@ -7,14 +6,19 @@ import {
   Select,
   message,
   Spin,
+  Checkbox,
 } from "antd";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
 function ProductCreate() {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
-  const { data: brands, isLoading } = useQuery({
+  // Fetch brands
+  const { data: brands, isLoading: loadingBrands } = useQuery({
     queryKey: ["brands"],
     queryFn: async () => {
       const res = await axios.get("http://localhost:3001/brands");
@@ -22,166 +26,128 @@ function ProductCreate() {
     },
   });
 
-  const addProduct = async (values: any) => {
-    const payload = {
-      name: values.name,
-      image: values.image,
-      brandId: values.brandId,
-      price: values.price,
-      stock: values.stock,
-      size: values.size,
-    };
-    return await axios.post("http://localhost:3001/products", payload);
-  };
-
-  const { mutate } = useMutation({
-    mutationFn: addProduct,
-    onSuccess: () => {
-      message.success("Thêm sản phẩm thành công");
-      form.resetFields();
-    },
-    onError: () => {
-      message.error("Thêm sản phẩm thất bại");
+  // Fetch categories
+  const { data: categories, isLoading: loadingCategories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3001/categories");
+      return res.data;
     },
   });
 
-  const handleSubmit = (values: any) => {
-    mutate(values);
+  // Create product
+  const mutation = useMutation({
+    mutationFn: async (product: any) => {
+      // Get brand
+      const brandRes = await axios.get(
+        `http://localhost:3001/brands/${product.brandId}`
+      );
+
+      // Get category
+      const categoryRes = await axios.get(
+        `http://localhost:3001/categories/${product.categoryId}`
+      );
+
+      const productWithFullData = {
+        ...product,
+        brand: { name: brandRes.data.name },
+        category: { name: categoryRes.data.name },
+      };
+
+      return axios.post("http://localhost:3001/products", productWithFullData);
+    },
+    onSuccess: () => {
+      message.success("Thêm sản phẩm thành công!");
+      navigate("/");
+    },
+    onError: () => {
+      message.error("Lỗi khi thêm sản phẩm.");
+    },
+  });
+
+  const onFinish = (values: any) => {
+    mutation.mutate(values);
   };
 
   return (
-    <div style={{ background: "#f5f5f5", minHeight: "100vh", paddingTop: 30 }}>
+    <div style={{ padding: 20 }}>
       <Header />
-      <div
-        style={{
-          maxWidth: 600,
-          margin: "40px auto",
-          background: "#fff",
-          padding: 24,
-          borderRadius: 12,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: 24,
-            fontWeight: "bold",
-            marginBottom: 24,
-          }}
+      <h2>Thêm sản phẩm</h2>
+
+      {loadingBrands || loadingCategories ? (
+        <Spin />
+      ) : (
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{ size: [] }}
         >
-          Thêm sản phẩm
-        </h2>
+          <Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
 
-        {isLoading ? (
-          <Spin />
-        ) : (
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={handleSubmit}
-            style={{ display: "flex", flexDirection: "column", gap: 12 }}
+          <Form.Item name="price" label="Giá" rules={[{ required: true }]}>
+            <InputNumber min={0} style={{ width: "100%" }} />
+          </Form.Item>
+
+          <Form.Item name="description" label="Mô tả">
+            <Input.TextArea rows={4} />
+          </Form.Item>
+
+          <Form.Item name="image" label="Link ảnh" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item name="brandId" label="Thương hiệu" rules={[{ required: true }]}>
+            <Select placeholder="Chọn thương hiệu">
+              {brands?.map((brand: any) => (
+                <Select.Option key={brand.id} value={brand.id}>
+                  {brand.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="categoryId"
+            label="Danh mục"
+            rules={[{ required: true }]}
           >
-            <Form.Item
-              label="Tên Sản Phẩm *"
-              name="name"
-              rules={[{ required: true, message: "Tên sản phẩm là bắt buộc" }]}
-            >
-              <Input placeholder="Adidas Ultra Boost" />
-            </Form.Item>
+            <Select placeholder="Chọn danh mục">
+              {categories?.map((cat: any) => (
+                <Select.Option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
 
-            <Form.Item
-              label="Hình Ảnh *"
-              name="image"
-              rules={[{ required: true, message: "Image là bắt buộc" }]}
-            >
-              <Input placeholder="https://..." />
-            </Form.Item>
+          <Form.Item name="stock" label="Số lượng kho" rules={[{ required: true }]}>
+            <InputNumber min={0} style={{ width: "100%" }} />
+          </Form.Item>
 
-            <Form.Item
-              label="Thương Hiệu *"
-              name="brandId"
-              rules={[{ required: true, message: "Thương hiệu là bắt buộc" }]}
-            >
-              <Select placeholder="Chọn thương hiệu">
-                {brands.map((brand: any) => (
-                  <Select.Option key={brand.id} value={parseInt(brand.id)}>
-                    {brand.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
+          <Form.Item name="size" label="Size">
+            <Checkbox.Group>
+              {["S", "M", "L", "XL", "XXL"].map((s) => (
+                <Checkbox value={s} key={s}>
+                  {s}
+                </Checkbox>
+              ))}
+            </Checkbox.Group>
+          </Form.Item>
 
-            <Form.Item
-              label="Giá *"
-              name="price"
-              rules={[
-                { required: true, message: "Giá là bắt buộc" },
-                { type: "number", min: 0, message: "Giá phải >= 0" },
-              ]}
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="bg-blue-500"
             >
-              <InputNumber
-                placeholder="590000"
-                style={{ width: "100%" }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Mô tả"
-              name="description"
-              rules={[{ required: true, message: "Mô tả là bắt buộc" }]}
-            >
-              <Input.TextArea placeholder="Nhập mô tả sản phẩm" />
-            </Form.Item>
-
-            <Form.Item
-              label="Danh mục"
-              name="categoryId"
-              rules={[{ required: true, message: "Danh mục là bắt buộc" }]}
-            >
-              <Select placeholder="Chọn danh mục">
-                <Select.Option value={1}>Premier League</Select.Option>
-                <Select.Option value={2}>La Liga</Select.Option>
-                <Select.Option value={3}>Bundesliga</Select.Option>
-                <Select.Option value={4}>Ligue 1</Select.Option>
-                <Select.Option value={5}>Serie A</Select.Option>
-                <Select.Option value={6}>Đội tuyển quốc gia</Select.Option>
-                <Select.Option value={7}>V League</Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label="Tồn Kho *"
-              name="stock"
-              rules={[
-                { required: true, message: "Số lượng là bắt buộc" },
-                { type: "number", min: 0, message: "Tồn kho phải >= 0" },
-              ]}
-            >
-              <InputNumber placeholder="15" style={{ width: "100%" }} />
-            </Form.Item>
-
-            <Form.Item
-              label="Kích Cỡ *"
-              name="size"
-              rules={[{ required: true, message: "Size là bắt buộc" }]}
-            >
-              <Select mode="multiple" placeholder="Chọn size">
-                <Select.Option value="S">S</Select.Option>
-                <Select.Option value="M">M</Select.Option>
-                <Select.Option value="L">L</Select.Option>
-                <Select.Option value="XL">XL</Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                Tạo sản phẩm
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
-      </div>
+              Thêm sản phẩm
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
     </div>
   );
 }
