@@ -50,12 +50,28 @@ function ProductCreate() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
+    <div style={{ background: "#f5f5f5", minHeight: "100vh", paddingTop: 30 }}>
       <Header />
-      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-center mb-8 text-black-600">
-          Create Product
-        </h1>
+      <div
+        style={{
+          maxWidth: 600,
+          margin: "40px auto",
+          background: "#fff",
+          padding: 24,
+          borderRadius: 12,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: 24,
+            fontWeight: "bold",
+            marginBottom: 24,
+          }}
+        >
+          Thêm sản phẩm
+        </h2>
 
         {isLoading ? (
           <Spin />
@@ -64,7 +80,7 @@ function ProductCreate() {
             form={form}
             layout="vertical"
             onFinish={handleSubmit}
-            className="space-y-4"
+            style={{ display: "flex", flexDirection: "column", gap: 12 }}
           >
             <Form.Item
               label="Tên Sản Phẩm *"
@@ -104,7 +120,10 @@ function ProductCreate() {
                 { type: "number", min: 0, message: "Giá phải >= 0" },
               ]}
             >
-              <InputNumber className="w-full" placeholder="590000" />
+              <InputNumber
+                placeholder="590000"
+                style={{ width: "100%" }}
+              />
             </Form.Item>
 
             <Form.Item
@@ -139,7 +158,7 @@ function ProductCreate() {
                 { type: "number", min: 0, message: "Tồn kho phải >= 0" },
               ]}
             >
-              <InputNumber className="w-full" placeholder="15" />
+              <InputNumber placeholder="15" style={{ width: "100%" }} />
             </Form.Item>
 
             <Form.Item
@@ -156,12 +175,8 @@ function ProductCreate() {
             </Form.Item>
 
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600"
-              >
-                Submit
+              <Button type="primary" htmlType="submit" block>
+                Tạo sản phẩm
               </Button>
             </Form.Item>
           </Form>

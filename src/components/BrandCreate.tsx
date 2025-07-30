@@ -26,25 +26,53 @@ function BrandCreate() {
   };
 
   return (
-    <div className="mt-6 max-w-[600px] mx-auto px-6">
-        <Header /> <br />
-      <h1 className="text-3xl font-bold text-center mb-6">Create Brand</h1>
-      <Form form={form} layout="vertical" onFinish={handleSubmit}>
-        <Form.Item
-          label="Tên thương hiệu *"
-          name="name"
-          rules={[
-            { required: true, message: "Tên thương hiệu là bắt buộc" },
-            { min: 2, message: "Ít nhất 2 ký tự" },
-          ]}
+    <div style={{ background: "#f5f5f5", minHeight: "100vh", paddingTop: 30 }}>
+      <Header />
+      <div
+        style={{
+          maxWidth: 600,
+          margin: "40px auto",
+          background: "#fff",
+          padding: 24,
+          borderRadius: 12,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: 24,
+            fontWeight: "bold",
+            marginBottom: 24,
+          }}
         >
-          <Input placeholder="Ví dụ: Adidas, Nike..." />
-        </Form.Item>
+          Thêm thương hiệu
+        </h2>
 
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: 12 }}
+        >
+          <Form.Item
+            label="Tên thương hiệu *"
+            name="name"
+            rules={[
+              { required: true, message: "Tên thương hiệu là bắt buộc" },
+              { min: 2, message: "Tối thiểu 2 ký tự" },
+            ]}
+          >
+            <Input placeholder="Nike, Adidas, Puma..." />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Tạo thương hiệu
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 }

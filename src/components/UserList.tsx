@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { Table, Tag, Spin, Typography, Input } from "antd";
+import { Table, Tag, Spin, Typography, Input, Button } from "antd";
 import Header from "./Header";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -71,7 +71,20 @@ const UserList: React.FC = () => {
   return (
     <div style={{ padding: 20 }}>
       <Header />
-      <Title level={2}>Danh sách người dùng</Title>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+          marginTop: 15,
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Danh sách người dùng</h2>
+        <Link to="/add-user">
+          <Button type="primary">Thêm người dùng</Button>
+        </Link>
+      </div>
 
       <Input.Search
         placeholder="Tìm người dùng theo tên"

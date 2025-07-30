@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Image, Table, Tag, Input } from "antd";
+import { Image, Table, Tag, Input, Button } from "antd";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -36,19 +36,19 @@ function ProductList() {
 
   const columns = [
     {
-      title: "ID",
+      title: "Số thứ tự",
       dataIndex: "id",
-      render: (id: number) => <Link to={`/products/${id}`}>ID: {id}</Link>,
+      render: (id: number) => <Link to={`/products/${id}`}>#{id}</Link>,
     },
     {
       title: "Ảnh",
       dataIndex: "image",
       render: (src: string, record: Product) => (
-        <Image src={src} alt={record.name} width={100} />
+        <Image src={src} alt={record.name} width={80} />
       ),
     },
     {
-      title: "Tên",
+      title: "Tên sản phẩm",
       dataIndex: "name",
     },
     {
@@ -72,14 +72,25 @@ function ProductList() {
         ),
     },
     {
-  title: "Size",
-  dataIndex: "size",
-  render: (sizes: string[] | string) =>
-    Array.isArray(sizes)
-      ? sizes.map((s) => <Tag key={s}>{s}</Tag>)
-      : <Tag>{sizes}</Tag>,
-},
-
+      title: "Size",
+      dataIndex: "size",
+      render: (sizes: string[] | string) =>
+        Array.isArray(sizes)
+          ? sizes.map((s) => <Tag key={s}>{s}</Tag>)
+          : <Tag>{sizes}</Tag>,
+    },
+    {
+      title: "Tùy chọn",
+      key: "actions",
+      render: (record: Product) => (
+        <div style={{ display: "flex", gap: 8 }}>
+          <Link to={`/update-product/${record.id}`}>
+            <Button type="primary">Sửa</Button>
+          </Link>
+          <Button type="primary" danger>Xoá</Button>
+        </div>
+      ),
+    },
   ];
 
   const onSearch = (value: string) => {
@@ -89,7 +100,21 @@ function ProductList() {
   return (
     <div style={{ padding: 20 }}>
       <Header />
-      <h2>Danh sách sản phẩm</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+          marginTop: 15,
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Danh sách sản phẩm</h2>
+        <Link to="/add-product">
+          <Button type="primary">Thêm sản phẩm</Button>
+        </Link>
+      </div>
+
 
       <Input.Search
         placeholder="Tìm sản phẩm theo tên"
@@ -97,10 +122,10 @@ function ProductList() {
         enterButton="Tìm"
         defaultValue={name}
         onSearch={onSearch}
-        style={{ width: 300, marginBottom: 20 }}
+        style={{ width: 300, marginBottom: 16 }}
       />
 
-      {error && <p>{(error as Error).message}</p>}
+      {error && <p style={{ color: "red" }}>{(error as Error).message}</p>}
 
       <Table
         dataSource={data}

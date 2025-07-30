@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { Input, Table } from "antd";
+import { Button, Input, Table } from "antd";
 import Header from "./Header";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 interface Category {
   id: number;
@@ -42,7 +42,20 @@ function CategoryList() {
   return (
     <div style={{ padding: 20 }}>
       <Header />
-      <h2 style={{ marginBottom: 16 }}>Danh sách danh mục</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+          marginTop: 15,
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Danh sách danh mục</h2>
+        <Link to="/add-category">
+          <Button type="primary">Thêm danh mục</Button>
+        </Link>
+      </div>
 
       <Input.Search
         placeholder="Tìm danh mục theo tên"

@@ -10,6 +10,7 @@ import ProductCreate from "./components/ProductCreate";
 import CategoryCreate from "./components/CategoryCreate";
 import UserCreate from "./components/UserCreate";
 import BrandCreate from "./components/BrandCreate";
+import ProductUpdate from "./components/ProductUpdate";
 
 
 function App() {
@@ -53,6 +54,10 @@ function App() {
      {
       path : "/add-brand",
       element : <BrandCreate/>,
+    },
+    {
+      path : "/update-product/:id",
+      element : <ProductUpdate/>,
     },
   ])
   return (

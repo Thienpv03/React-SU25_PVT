@@ -35,6 +35,10 @@
     {
       "id": "d3e4",
       "name": "nike"
+    },
+    {
+      "id": "05b1",
+      "name": "adidas"
     }
   ],
   "users": [
@@ -95,47 +99,41 @@
     {
       "id": "ba68",
       "name": "League 2"
+    },
+    {
+      "id": "f2a8",
+      "name": "danh muc",
+      "description": "danh mục"
     }
   ],
   "products": [
     {
-      "id": "1",
       "name": "Áo Chelsea sân nhà 2025",
-      "price": 550000,
-      "description": "Áo sân nhà Chelsea mùa giải 2024",
       "image": "https://example.com/images/chelsea-2025.jpg",
+      "price": 550000,
+      "stock": 20,
+      "description": "Áo sân nhà Chelsea mùa giải 2025",
       "brandId": 1,
-      "brand": {
-        "id": 1,
-        "name": "Chealsea"
-      },
-      "categoryId": 1,
       "size": [
         "S",
         "M",
         "L",
         "XL"
       ],
-      "stock": 20
+      "id": "1"
     },
     {
-      "id": "2",
       "name": "Áo Real Madrid Sân Nhà 2024",
-      "price": 600000,
-      "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
       "image": "https://example.com/images/real-2024.jpg",
+      "price": 59999999,
+      "stock": 15,
+      "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
       "brandId": 2,
-      "brand": {
-        "id": 2,
-        "name": "Real Madrid"
-      },
-      "categoryId": 2,
       "size": [
         "M",
-        "L",
-        "XL"
+        "L"
       ],
-      "stock": 15
+      "id": "2"
     },
     {
       "id": "3",
@@ -214,16 +212,14 @@
       "stock": 13
     },
     {
-      "id": "c0ff",
+      "id": "9f9b",
       "name": "Áo đấu MC",
-      "image": "aaa",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTubpPU7SE_ypMhYI-5U0nzd_JV3SH9TzZpkw&s",
       "brandId": 8,
-      "price": 540000,
+      "price": 520,
       "stock": 12,
       "size": [
-        "S",
-        "M",
-        "L"
+        "S"
       ]
     }
   ]

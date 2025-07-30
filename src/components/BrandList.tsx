@@ -1,9 +1,9 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Table, Input } from "antd";
+import { Table, Input, Button } from "antd";
 import axios from "axios";
 import Header from "./Header";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 interface Brand {
   id: number;
@@ -53,7 +53,20 @@ const BrandList: React.FC = () => {
   return (
     <div style={{ padding: 20 }}>
       <Header />
-      <h2 style={{ marginBottom: 16 }}>Danh sách thương hiệu</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+          marginTop: 15,
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Danh sách thương hiệu</h2>
+        <Link to="/add-brand">
+          <Button type="primary">Thêm thương hiệu</Button>
+        </Link>
+      </div>
 
       <Input.Search
         placeholder="Tìm thương hiệu theo tên"
