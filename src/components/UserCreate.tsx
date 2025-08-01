@@ -1,28 +1,21 @@
-import { useMutation } from "@tanstack/react-query";
 import { Button, Form, Input, Select, message } from "antd";
-import axios from "axios";
 import Header from "./Header";
+import { useCreate } from "../hooks/UseCreate";
 
 function UserCreate() {
   const [form] = Form.useForm();
-
-  const addUser = async (values: any) => {
-    return await axios.post("http://localhost:3001/users", values);
-  };
-
-  const { mutate } = useMutation({
-    mutationFn: addUser,
-    onSuccess: () => {
-      message.success("Tạo người dùng thành công");
-      form.resetFields();
-    },
-    onError: () => {
-      message.error("Tạo người dùng thất bại");
-    },
-  });
+  const createUser = useCreate("users");
 
   const handleSubmit = (values: any) => {
-    mutate(values);
+    createUser.mutate(values, {
+      onSuccess: () => {
+        message.success("Tạo người dùng thành công");
+        form.resetFields();
+      },
+      onError: () => {
+        message.error("Tạo người dùng thất bại");
+      },
+    });
   };
 
   return (
@@ -38,14 +31,7 @@ function UserCreate() {
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         }}
       >
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: 24,
-            fontWeight: "bold",
-            marginBottom: 24,
-          }}
-        >
+        <h2 style={{ textAlign: "center", fontSize: 24, fontWeight: "bold", marginBottom: 24 }}>
           Tạo người dùng
         </h2>
 
@@ -89,7 +75,11 @@ function UserCreate() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+            >
               Thêm người dùng
             </Button>
           </Form.Item>

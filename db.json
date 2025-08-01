@@ -113,16 +113,20 @@
       "price": 550000,
       "stock": 20,
       "description": "Áo sân nhà Chelsea mùa giải 2025",
-      "brandId": "7",
+      "brandId": "1",
       "categoryId": "1",
       "size": [
         "S",
         "M",
-        "L",
-        "XL"
+        "L"
       ],
       "brand": {
-        "name": "Manchester United"
+        "id": "1",
+        "name": "Chealsea"
+      },
+      "category": {
+        "id": "1",
+        "name": "Premier League"
       },
       "id": "1"
     },
@@ -133,13 +137,16 @@
       "stock": 15,
       "description": "Mẫu áo trắng truyền thống của Real mùa 2024",
       "brandId": 2,
-      "brand": {
-        "name": "Real Madrid"
-      },
+      "categoryId": "2",
       "size": [
         "M",
-        "L"
+        "L",
+        "XL"
       ],
+      "category": {
+        "id": "2",
+        "name": "La Liga"
+      },
       "id": "2"
     },
     {
@@ -197,7 +204,7 @@
       "stock": 16
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Áo Bayern Munich Sân Nhà 2024",
       "price": 590000,
       "description": "Áo đỏ truyền thống của Bayern Munich mùa giải Bundesliga 2024",
@@ -244,6 +251,28 @@
         "name": "Manchester City"
       },
       "id": "774e"
+    },
+    {
+      "id": "c68a",
+      "name": "Sách 1",
+      "price": 123,
+      "description": "12",
+      "image": "aaa",
+      "brandId": "2",
+      "categoryId": "6",
+      "stock": 123,
+      "size": [
+        "L",
+        "XL"
+      ],
+      "brand": {
+        "id": "2",
+        "name": "Real Madrid"
+      },
+      "category": {
+        "id": "6",
+        "name": "Đội tuyển quốc gia"
+      }
     }
   ]
 }

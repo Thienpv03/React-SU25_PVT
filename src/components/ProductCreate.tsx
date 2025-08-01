@@ -8,71 +8,48 @@ import {
   Spin,
   Checkbox,
 } from "antd";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import { useCreate } from "../hooks/UseCreate";
+
 
 function ProductCreate() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  // Fetch brands
-  const { data: brands, isLoading: loadingBrands } = useQuery({
+  const { data: brands = [], isLoading: loadingBrands } = useQuery({
     queryKey: ["brands"],
-    queryFn: async () => {
-      const res = await axios.get("http://localhost:3001/brands");
-      return res.data;
-    },
+    queryFn: () => axios.get("http://localhost:3001/brands").then((res) => res.data),
   });
 
-  // Fetch categories
-  const { data: categories, isLoading: loadingCategories } = useQuery({
+  const { data: categories = [], isLoading: loadingCategories } = useQuery({
     queryKey: ["categories"],
-    queryFn: async () => {
-      const res = await axios.get("http://localhost:3001/categories");
-      return res.data;
-    },
+    queryFn: () => axios.get("http://localhost:3001/categories").then((res) => res.data),
   });
 
-  // Create product
-  const mutation = useMutation({
-    mutationFn: async (product: any) => {
-      // Get brand
-      const brandRes = await axios.get(
-        `http://localhost:3001/brands/${product.brandId}`
-      );
-
-      // Get category
-      const categoryRes = await axios.get(
-        `http://localhost:3001/categories/${product.categoryId}`
-      );
-
-      const productWithFullData = {
-        ...product,
-        brand: { name: brandRes.data.name },
-        category: { name: categoryRes.data.name },
-      };
-
-      return axios.post("http://localhost:3001/products", productWithFullData);
-    },
-    onSuccess: () => {
-      message.success("Thêm sản phẩm thành công!");
-      navigate("/");
-    },
-    onError: () => {
-      message.error("Lỗi khi thêm sản phẩm.");
-    },
-  });
+  const createProduct = useCreate("products", (values) => ({
+    brand: brands.find((b) => b.id === values.brandId) || undefined,
+    category: categories.find((c) => c.id === values.categoryId) || undefined,
+  }));
 
   const onFinish = (values: any) => {
-    mutation.mutate(values);
+    createProduct.mutate(values, {
+      onSuccess: () => {
+        message.success("Thêm sản phẩm thành công!");
+        navigate("/products");
+      },
+      onError: () => {
+        message.error("Lỗi khi thêm sản phẩm.");
+      },
+    });
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="p-6">
       <Header />
-      <h2>Thêm sản phẩm</h2>
+      <h2 className="text-2xl font-bold mb-4">Thêm sản phẩm</h2>
 
       {loadingBrands || loadingCategories ? (
         <Spin />
@@ -101,7 +78,7 @@ function ProductCreate() {
 
           <Form.Item name="brandId" label="Thương hiệu" rules={[{ required: true }]}>
             <Select placeholder="Chọn thương hiệu">
-              {brands?.map((brand: any) => (
+              {brands.map((brand) => (
                 <Select.Option key={brand.id} value={brand.id}>
                   {brand.name}
                 </Select.Option>
@@ -109,13 +86,9 @@ function ProductCreate() {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name="categoryId"
-            label="Danh mục"
-            rules={[{ required: true }]}
-          >
+          <Form.Item name="categoryId" label="Danh mục" rules={[{ required: true }]}>
             <Select placeholder="Chọn danh mục">
-              {categories?.map((cat: any) => (
+              {categories.map((cat) => (
                 <Select.Option key={cat.id} value={cat.id}>
                   {cat.name}
                 </Select.Option>
@@ -138,11 +111,7 @@ function ProductCreate() {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="bg-blue-500"
-            >
+            <Button type="primary" htmlType="submit" className="bg-blue-500">
               Thêm sản phẩm
             </Button>
           </Form.Item>

@@ -1,28 +1,22 @@
-import { useMutation } from "@tanstack/react-query";
 import { Button, Form, Input, message } from "antd";
-import axios from "axios";
 import Header from "./Header";
+import { useCreate } from "../hooks/UseCreate";
 
 function CategoryCreate() {
   const [form] = Form.useForm();
 
-  const addCategory = async (values: any) => {
-    return await axios.post("http://localhost:3001/categories", values);
-  };
+  const createCategory = useCreate("categories");
 
-  const { mutate } = useMutation({
-    mutationFn: addCategory,
-    onSuccess: () => {
-      message.success("Tạo danh mục thành công");
-      form.resetFields();
-    },
-    onError: () => {
-      message.error("Tạo danh mục thất bại");
-    },
-  });
-
-  const handleSubmit = async (values: any) => {
-    mutate(values);
+  const handleSubmit = (values: any) => {
+    createCategory.mutate(values, {
+      onSuccess: () => {
+        message.success("Tạo danh mục thành công");
+        form.resetFields();
+      },
+      onError: () => {
+        message.error("Tạo danh mục thất bại");
+      },
+    });
   };
 
   return (
@@ -38,14 +32,7 @@ function CategoryCreate() {
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         }}
       >
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: 24,
-            fontWeight: "bold",
-            marginBottom: 24,
-          }}
-        >
+        <h2 style={{ textAlign: "center", fontSize: 24, fontWeight: "bold", marginBottom: 24 }}>
           Thêm danh mục
         </h2>
 
@@ -75,7 +62,11 @@ function CategoryCreate() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+            >
               Tạo danh mục
             </Button>
           </Form.Item>

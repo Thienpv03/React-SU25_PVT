@@ -7,175 +7,123 @@ import {
   message,
   Spin,
 } from "antd";
-import Header from "./Header";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import axios from "axios";
+import Header from "./Header";
+import { useUpdate } from "../hooks/UseUpdate";
 
 function ProductUpdate() {
   const [form] = Form.useForm();
   const { id } = useParams();
   const nav = useNavigate();
 
-  // Lấy thông tin sản phẩm
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
     enabled: !!id,
-    queryFn: async () => {
-      const res = await axios.get(`http://localhost:3001/products/${id}`);
-      return res.data;
-    },
+    queryFn: async () =>
+      (await axios.get(`http://localhost:3001/products/${id}`)).data,
   });
 
-  // Lấy danh sách thương hiệu
   const { data: brands = [] } = useQuery({
     queryKey: ["brands"],
-    queryFn: async () => {
-      const res = await axios.get("http://localhost:3001/brands");
-      return res.data;
-    },
+    queryFn: async () =>
+      (await axios.get("http://localhost:3001/brands")).data,
   });
 
-  // Lấy danh sách danh mục
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
-    queryFn: async () => {
-      const res = await axios.get("http://localhost:3001/categories");
-      return res.data;
-    },
+    queryFn: async () =>
+      (await axios.get("http://localhost:3001/categories")).data,
   });
 
-  // Set lại form khi có dữ liệu
   useEffect(() => {
-    if (product) {
-      form.setFieldsValue(product);
-    }
+    if (product) form.setFieldsValue(product);
   }, [product]);
 
-  // Submit
-  const mutation = useMutation({
-    mutationFn: async (values: any) => {
-      const brand = brands.find((b: any) => b.id === values.brandId);
-      return axios.put(`http://localhost:3001/products/${id}`, {
-        ...values,
-        brand: brand ? { name: brand.name } : undefined,
-      });
-    },
-    onSuccess: () => {
-      message.success("Cập nhật thành công!");
-      nav("/products");
-    },
-    onError: () => {
-      message.error("Cập nhật thất bại!");
-    },
-  });
+  const updateProduct = useUpdate("products", (values) => ({
+    brand: brands.find((b) => b.id === values.brandId),
+    category: categories.find((c) => c.id === values.categoryId),
+  }));
 
   const handleSubmit = (values: any) => {
-    mutation.mutate(values);
+    if (!id) return message.error("Thiếu ID sản phẩm");
+    updateProduct.mutate(
+      { id, values },
+      {
+        onSuccess: () => {
+          message.success("Cập nhật thành công!");
+          nav("/products");
+        },
+        onError: () => {
+          message.error("Cập nhật thất bại");
+        },
+      }
+    );
   };
 
-  if (isLoading) return <Spin />;
+  if (isLoading) return <Spin className="block mx-auto mt-10" />;
 
   return (
     <div>
       <Header />
-      <div className="mt-6 max-w-[800px] mx-auto px-6">
+      <div className="max-w-[800px] mx-auto px-6 mt-6">
         <h1 className="text-3xl font-bold text-center mb-6">Cập nhật sản phẩm</h1>
-
         <Form
           form={form}
           layout="vertical"
           onFinish={handleSubmit}
+          disabled={updateProduct.isPending}
         >
-          <Form.Item
-            label="Tên sản phẩm"
-            name="name"
-            rules={[{ required: true, message: "Tên sản phẩm không được để trống" }]}
-          >
+          <Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-
-          <Form.Item
-            label="Hình ảnh"
-            name="image"
-            rules={[{ required: true, message: "Ảnh sản phẩm không được để trống" }]}
-          >
+          <Form.Item name="image" label="Hình ảnh" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-
-          <Form.Item
-            label="Giá"
-            name="price"
-            rules={[{ required: true, message: "Giá sản phẩm không được để trống" }]}
-          >
+          <Form.Item name="price" label="Giá" rules={[{ required: true }]}>
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
-
-          <Form.Item
-            label="Tồn kho"
-            name="stock"
-            rules={[{ required: true, message: "Tồn kho không được để trống" }]}
-          >
+          <Form.Item name="stock" label="Tồn kho" rules={[{ required: true }]}>
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
-
-          <Form.Item
-            label="Mô tả"
-            name="description"
-            rules={[{ required: true, message: "Mô tả không được để trống" }]}
-          >
+          <Form.Item name="description" label="Mô tả" rules={[{ required: true }]}>
             <Input.TextArea rows={3} />
           </Form.Item>
-
-          <Form.Item
-            label="Thương hiệu"
-            name="brandId"
-            rules={[{ required: true, message: "Vui lòng chọn thương hiệu" }]}
-          >
+          <Form.Item name="brandId" label="Thương hiệu" rules={[{ required: true }]}>
             <Select placeholder="Chọn thương hiệu">
-              {brands.map((brand: any) => (
-                <Select.Option key={brand.id} value={brand.id}>
-                  {brand.name}
+              {brands.map((b) => (
+                <Select.Option key={b.id} value={b.id}>
+                  {b.name}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
-
-          <Form.Item
-            label="Danh mục"
-            name="categoryId"
-            rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
-          >
+          <Form.Item name="categoryId" label="Danh mục" rules={[{ required: true }]}>
             <Select placeholder="Chọn danh mục">
-              {categories.map((cat: any) => (
-                <Select.Option key={cat.id} value={cat.id}>
-                  {cat.name}
+              {categories.map((c) => (
+                <Select.Option key={c.id} value={c.id}>
+                  {c.name}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
-
-          <Form.Item
-            label="Kích cỡ"
-            name="size"
-            rules={[{ required: true, message: "Vui lòng chọn ít nhất một size" }]}
-          >
+          <Form.Item name="size" label="Kích cỡ" rules={[{ required: true }]}>
             <Select mode="multiple" placeholder="Chọn size">
-              {["S", "M", "L", "XL", "XXL"].map((size) => (
-                <Select.Option key={size} value={size}>
-                  {size}
+              {["S", "M", "L", "XL", "XXL"].map((s) => (
+                <Select.Option key={s} value={s}>
+                  {s}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
               className="bg-blue-500"
-
+              loading={updateProduct.isPending}
             >
               Cập nhật
             </Button>
