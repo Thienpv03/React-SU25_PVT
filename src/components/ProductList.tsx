@@ -1,8 +1,11 @@
-import { Image, Table, Tag, Input, Button } from "antd";
+import { Image, Table, Tag, Input, Button, message, Modal } from "antd";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { useList } from "../hooks/UseList";
+import { useDelete } from "../hooks/UseDelete";
+
+
 
 interface Product {
   id: number;
@@ -26,6 +29,19 @@ function ProductList() {
     _expand: "brand",
     name,
   });
+
+  const { mutate: deleteProduct, isLoading: isDeleting } = useDelete("products");
+
+  const handleDelete = (product: Product) => {
+    Modal.confirm({
+      title: "Xác nhận xoá",
+      content: `Bạn có chắc chắn muốn xoá sản phẩm "${product.name}"?`,
+      okText: "Xoá",
+      okType: "danger",
+      cancelText: "Huỷ",
+      onOk: () => deleteProduct(product.id),
+    });
+  };
 
   const columns: ColumnsType<Product> = [
     {
@@ -78,7 +94,14 @@ function ProductList() {
           <Link to={`/update-product/${record.id}`}>
             <Button type="primary">Sửa</Button>
           </Link>
-          <Button type="primary" danger>Xoá</Button>
+          <Button
+            type="primary"
+            danger
+            loading={isDeleting}
+            onClick={() => handleDelete(record)}
+          >
+            Xoá
+          </Button>
         </div>
       ),
     },

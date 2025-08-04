@@ -11,6 +11,8 @@ import CategoryCreate from "./components/CategoryCreate";
 import UserCreate from "./components/UserCreate";
 import BrandCreate from "./components/BrandCreate";
 import ProductUpdate from "./components/ProductUpdate";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 
 function App() {
@@ -58,6 +60,14 @@ function App() {
     {
       path : "/update-product/:id",
       element : <ProductUpdate/>,
+    },
+    {
+      path : "register",
+      element : <Register/>,
+    },
+    {
+      path : "login",
+      element : <Login/>,
     },
   ])
   return (
