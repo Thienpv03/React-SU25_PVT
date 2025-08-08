@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { Button, Input, Table } from "antd";
+import { Button, Input, Modal, Table } from "antd";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
+import { useDelete } from "../hooks/UseDelete";
 
 interface Category {
   id: number;
@@ -14,15 +15,28 @@ function CategoryList() {
 
   const fetchCategories = async (): Promise<Category[]> => {
     const res = await fetch(
-      `http://localhost:3001/categories?name=${name}`
+      `http://localhost:3001/categories?name_like=${name}`
     );
     return res.json();
   };
 
-  const { data, isLoading, error } = useQuery({
+  const { data = [], isLoading, error } = useQuery({
     queryKey: ["categories", name],
     queryFn: fetchCategories,
   });
+
+  const { mutate: deleteCategory, isLoading: isDeleting } = useDelete("categories");
+
+  const handleDelete = (category: Category) => {
+    Modal.confirm({
+      title: "Xác nhận xoá",
+      content: `Bạn có chắc chắn muốn xoá danh mục "${category.name}"?`,
+      okText: "Xoá",
+      okType: "danger",
+      cancelText: "Huỷ",
+      onOk: () => deleteCategory(category.id),
+    });
+  };
 
   const onSearch = (value: string) => {
     setSearchParams({ name: value });
@@ -36,6 +50,25 @@ function CategoryList() {
     {
       title: "Tên danh mục",
       dataIndex: "name",
+    },
+    {
+      title: "Tùy chọn",
+      key: "actions",
+      render: (record: Category) => (
+        <div style={{ display: "flex", gap: 8 }}>
+          <Link to={`/update-category/${record.id}`}>
+            <Button type="primary">Sửa</Button>
+          </Link>
+          <Button
+            type="primary"
+            danger
+            loading={isDeleting}
+            onClick={() => handleDelete(record)}
+          >
+            Xoá
+          </Button>
+        </div>
+      ),
     },
   ];
 

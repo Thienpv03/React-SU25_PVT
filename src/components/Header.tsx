@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  
-import { UnorderedListOutlined, HomeOutlined, ShopFilled, UserOutlined, FileAddOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined, HomeOutlined, ShopFilled, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
@@ -8,6 +8,11 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   
+  {
+    label: 'Home',
+    key: '/home',
+    icon: <HomeOutlined />,
+  },
   {
     label: 'Products',
     key: '/products',

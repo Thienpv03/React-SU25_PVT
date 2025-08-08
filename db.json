@@ -1,8 +1,8 @@
 {
   "brands": [
     {
-      "id": "1",
-      "name": "Chealsea"
+      "name": "Chealsea",
+      "id": "1"
     },
     {
       "id": "2",
@@ -15,10 +15,6 @@
     {
       "id": "4",
       "name": "Bayern Munich"
-    },
-    {
-      "id": "5",
-      "name": "PSG"
     },
     {
       "id": "6",
@@ -48,6 +44,13 @@
       "name": "Thiên",
       "role": "user",
       "id": 1
+    },
+    {
+      "email": "thien2222@gmail.com",
+      "password": "$2a$10$.fUd7nPj.ZPv8/E.W/G/WOwICFyRZTjXmqoD2hpCNx4c5vzmh8Xge",
+      "name": "a",
+      "role": "user",
+      "id": 2
     }
   ],
   "categories": [
@@ -68,10 +71,6 @@
       "name": "Ligue 1"
     },
     {
-      "id": "5",
-      "name": "Serie A"
-    },
-    {
       "id": "6",
       "name": "Đội tuyển quốc gia"
     },
@@ -80,13 +79,8 @@
       "name": "V League"
     },
     {
-      "id": "ba68",
-      "name": "League 2"
-    },
-    {
-      "id": "f2a8",
-      "name": "danh muc",
-      "description": "danh mục"
+      "name": "Serie A",
+      "id": "ba68"
     }
   ],
   "products": [
@@ -149,42 +143,6 @@
         "L"
       ],
       "stock": 18
-    },
-    {
-      "id": "4",
-      "name": "Áo PSG Sân Khách 2024",
-      "price": 620000,
-      "description": "Áo PSG thiết kế hiện đại mùa giải mới",
-      "image": "https://example.com/images/psg-away-2024.jpg",
-      "brandId": 5,
-      "brand": {
-        "name": "PSG"
-      },
-      "categoryId": 4,
-      "size": [
-        "M",
-        "L"
-      ],
-      "stock": 10
-    },
-    {
-      "id": "5",
-      "name": "Áo AC Milan 2024",
-      "price": 610000,
-      "description": "Áo đỏ đen truyền thống của AC Milan mùa Serie A 2024",
-      "image": "https://example.com/images/acmilan-2024.jpg",
-      "brandId": 6,
-      "brand": {
-        "name": "AC Milan"
-      },
-      "categoryId": 5,
-      "size": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "stock": 16
     },
     {
       "id": "9f9b",

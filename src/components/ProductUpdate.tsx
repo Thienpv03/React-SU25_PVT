@@ -63,35 +63,96 @@ function ProductUpdate() {
     );
   };
 
-  if (isLoading) return <Spin className="block mx-auto mt-10" />;
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: 50,
+        }}
+      >
+        <Spin />
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div style={{ background: "#f5f5f5", minHeight: "100vh", paddingTop: 30 }}>
       <Header />
-      <div className="max-w-[800px] mx-auto px-6 mt-6">
-        <h1 className="text-3xl font-bold text-center mb-6">Cập nhật sản phẩm</h1>
+      <div
+        style={{
+          maxWidth: 800,
+          margin: "40px auto",
+          background: "#fff",
+          padding: 24,
+          borderRadius: 12,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: 24,
+            fontWeight: "bold",
+            marginBottom: 24,
+          }}
+        >
+          Cập nhật sản phẩm
+        </h1>
+
         <Form
           form={form}
           layout="vertical"
           onFinish={handleSubmit}
           disabled={updateProduct.isPending}
+          style={{ display: "flex", flexDirection: "column", gap: 12 }}
         >
-          <Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
+          <Form.Item
+            name="name"
+            label="Tên sản phẩm *"
+            rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="image" label="Hình ảnh" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="image"
+            label="Hình ảnh *"
+            rules={[{ required: true, message: "Vui lòng nhập link hình ảnh" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="price" label="Giá" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="price"
+            label="Giá *"
+            rules={[{ required: true, message: "Vui lòng nhập giá" }]}
+          >
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
-          <Form.Item name="stock" label="Tồn kho" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="stock"
+            label="Tồn kho *"
+            rules={[{ required: true, message: "Vui lòng nhập số lượng tồn" }]}
+          >
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
-          <Form.Item name="description" label="Mô tả" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="description"
+            label="Mô tả *"
+            rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
+          >
             <Input.TextArea rows={3} />
           </Form.Item>
-          <Form.Item name="brandId" label="Thương hiệu" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="brandId"
+            label="Thương hiệu *"
+            rules={[{ required: true, message: "Vui lòng chọn thương hiệu" }]}
+          >
             <Select placeholder="Chọn thương hiệu">
               {brands.map((b) => (
                 <Select.Option key={b.id} value={b.id}>
@@ -100,7 +161,12 @@ function ProductUpdate() {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="categoryId" label="Danh mục" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="categoryId"
+            label="Danh mục *"
+            rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
+          >
             <Select placeholder="Chọn danh mục">
               {categories.map((c) => (
                 <Select.Option key={c.id} value={c.id}>
@@ -109,7 +175,12 @@ function ProductUpdate() {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="size" label="Kích cỡ" rules={[{ required: true }]}>
+
+          <Form.Item
+            name="size"
+            label="Kích cỡ *"
+            rules={[{ required: true, message: "Vui lòng chọn size" }]}
+          >
             <Select mode="multiple" placeholder="Chọn size">
               {["S", "M", "L", "XL", "XXL"].map((s) => (
                 <Select.Option key={s} value={s}>
@@ -118,11 +189,12 @@ function ProductUpdate() {
               ))}
             </Select>
           </Form.Item>
+
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
-              className="bg-blue-500"
+              block
               loading={updateProduct.isPending}
             >
               Cập nhật

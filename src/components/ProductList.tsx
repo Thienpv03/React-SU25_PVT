@@ -1,4 +1,4 @@
-import { Image, Table, Tag, Input, Button, message, Modal } from "antd";
+import { Image, Table, Tag, Input, Button, Modal } from "antd";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";

@@ -8,11 +8,14 @@ import ProductDetail from "./components/ProductDetail";
 import UserList from "./components/UserList";
 import ProductCreate from "./components/ProductCreate";
 import CategoryCreate from "./components/CategoryCreate";
-import UserCreate from "./components/UserCreate";
 import BrandCreate from "./components/BrandCreate";
 import ProductUpdate from "./components/ProductUpdate";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Home from "./components/Home";
+import BrandUpdate from "./components/BrandUpdate";
+import CategoryUpdate from "./components/CategoryUpdate";
+import ProductListClient from "./components/ProductListClient";
 
 
 function App() {
@@ -49,10 +52,6 @@ function App() {
       path : "/add-category",
       element : <CategoryCreate/>,
     },
-    {
-      path : "/add-user",
-      element : <UserCreate/>,
-    },
      {
       path : "/add-brand",
       element : <BrandCreate/>,
@@ -62,12 +61,28 @@ function App() {
       element : <ProductUpdate/>,
     },
     {
+      path : "/update-brand/:id",
+      element : <BrandUpdate/>,
+    },
+    {
+      path : "/update-category/:id",
+      element : <CategoryUpdate/>,
+    },
+    {
       path : "register",
       element : <Register/>,
     },
     {
       path : "login",
       element : <Login/>,
+    },
+    {
+      path : "home",
+      element : <Home/>,
+    },
+    {
+      path : "product-client",
+      element : <ProductListClient/>,
     },
   ])
   return (

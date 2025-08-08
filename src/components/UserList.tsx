@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { Table, Tag, Spin, Typography, Input, Button } from "antd";
+import { Table, Tag, Typography, Input, Button } from "antd";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const UserList: React.FC = () => {
 
   const fetchUsers = async (): Promise<User[]> => {
     const { data } = await axios.get(
-      `http://localhost:3001/users?name=${name}`
+      `http://localhost:3001/users?name_like=${name}`
     );
     return data;
   };
@@ -58,16 +58,6 @@ const UserList: React.FC = () => {
     },
   ];
 
-  if (isLoading)
-    return (
-      <div style={{ textAlign: "center", marginTop: 40 }}>
-        <Spin size="large" tip="Đang tải người dùng..." />
-      </div>
-    );
-
-  if (error)
-    return <p style={{ color: "red", textAlign: "center" }}>Có lỗi xảy ra</p>;
-
   return (
     <div style={{ padding: 20 }}>
       <Header />
@@ -80,10 +70,9 @@ const UserList: React.FC = () => {
           marginTop: 15,
         }}
       >
-        <h2 style={{ margin: 0 }}>Danh sách người dùng</h2>
-        <Link to="/add-user">
-          <Button type="primary">Thêm người dùng</Button>
-        </Link>
+        <Title level={4} style={{ margin: 0 }}>
+          Danh sách người dùng
+        </Title>
       </div>
 
       <Input.Search
@@ -95,11 +84,16 @@ const UserList: React.FC = () => {
         style={{ width: 300, marginBottom: 16 }}
       />
 
+      {error && (
+        <p style={{ color: "red", textAlign: "center" }}>Có lỗi xảy ra</p>
+      )}
+
       <Table
         dataSource={data}
         columns={columns}
         rowKey={(record) => record.id.toString()}
         pagination={{ pageSize: 5 }}
+        loading={isLoading}
         bordered
       />
     </div>
