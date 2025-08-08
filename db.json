@@ -51,6 +51,30 @@
       "name": "a",
       "role": "user",
       "id": 2
+    },
+    {
+      "email": "abc@gmail.com",
+      "password": "$2a$10$Ep1quNDxHkyYjxnhbJJnlOprA2G4hWeZVnSfoYKxQNVBeZ1T84zXu",
+      "name": "Thiên",
+      "confirmPassword": "kkkkkkkk1",
+      "role": "admin",
+      "id": 3
+    },
+    {
+      "email": "admin123@gmail.com",
+      "password": "$2a$10$XtBX39pAOldtXEaq0DErXOgSdAEjlwU1bl99en6gbul8H2YzfACci",
+      "name": "Admin",
+      "confirmPassword": "kkkkkkkk1",
+      "role": "admin",
+      "id": 4
+    },
+    {
+      "email": "thien123@gmail.com",
+      "password": "$2a$10$F97NAPnhDZLnSZOWZzZt4uGGCWRuo885XsjrPwp4YORGMQ/6rX2X2",
+      "name": "Thiên",
+      "confirmPassword": "kkkkkkkk1",
+      "role": "admin",
+      "id": 5
     }
   ],
   "categories": [

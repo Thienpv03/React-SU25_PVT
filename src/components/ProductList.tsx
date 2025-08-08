@@ -5,8 +5,6 @@ import type { ColumnsType } from "antd/es/table";
 import { useList } from "../hooks/UseList";
 import { useDelete } from "../hooks/UseDelete";
 
-
-
 interface Product {
   id: number;
   name: string;
@@ -24,6 +22,10 @@ interface Product {
 function ProductList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const name = searchParams.get("name") || "";
+
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAdmin = user?.role === "admin";
 
   const { data, isLoading, error } = useList("products", {
     _expand: "brand",
@@ -86,7 +88,11 @@ function ProductList() {
           ? sizes.map((s) => <Tag key={s}>{s}</Tag>)
           : <Tag>{sizes}</Tag>,
     },
-    {
+  ];
+
+  
+  if (isAdmin) {
+    columns.push({
       title: "Tùy chọn",
       key: "actions",
       render: (record) => (
@@ -104,8 +110,8 @@ function ProductList() {
           </Button>
         </div>
       ),
-    },
-  ];
+    });
+  }
 
   const onSearch = (value: string) => {
     setSearchParams({ name: value });
@@ -124,9 +130,11 @@ function ProductList() {
         }}
       >
         <h2 style={{ margin: 0 }}>Danh sách sản phẩm</h2>
-        <Link to="/add-product">
-          <Button type="primary">Thêm sản phẩm</Button>
-        </Link>
+        {isAdmin && (
+          <Link to="/add-product">
+            <Button type="primary">Thêm sản phẩm</Button>
+          </Link>
+        )}
       </div>
 
       <Input.Search

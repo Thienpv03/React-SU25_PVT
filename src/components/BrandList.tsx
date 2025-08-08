@@ -4,7 +4,8 @@ import { Table, Input, Button, Modal } from "antd";
 import axios from "axios";
 import Header from "./Header";
 import { Link, useSearchParams } from "react-router-dom";
-import { useDelete } from "../hooks/useDelete"; // chỉnh path nếu cần
+import { useDelete } from "../hooks/UseDelete";
+
 
 interface Brand {
   id: number;
@@ -14,6 +15,10 @@ interface Brand {
 const BrandList: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const name = searchParams.get("name") || "";
+
+ 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAdmin = user?.role === "admin";
 
   const fetchBrands = async (): Promise<Brand[]> => {
     const { data } = await axios.get(
@@ -31,8 +36,8 @@ const BrandList: React.FC = () => {
     queryFn: fetchBrands,
   });
 
-  // ✅ Sử dụng useDelete
-  const { mutate: deleteBrand, isPending: isDeleting } = useDelete("brands");
+  
+  const { mutate: deleteBrand, isLoading: isDeleting } = useDelete("brands");
 
   const handleDelete = (brand: Brand) => {
     Modal.confirm({
@@ -49,6 +54,7 @@ const BrandList: React.FC = () => {
     setSearchParams({ name: value });
   };
 
+
   const columns = [
     {
       title: "ID",
@@ -60,7 +66,11 @@ const BrandList: React.FC = () => {
       dataIndex: "name",
       key: "name",
     },
-    {
+  ];
+
+ 
+  if (isAdmin) {
+    columns.push({
       title: "Tùy chọn",
       key: "actions",
       render: (record: Brand) => (
@@ -78,8 +88,8 @@ const BrandList: React.FC = () => {
           </Button>
         </div>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <div style={{ padding: 20 }}>
@@ -94,9 +104,11 @@ const BrandList: React.FC = () => {
         }}
       >
         <h2 style={{ margin: 0 }}>Danh sách thương hiệu</h2>
-        <Link to="/add-brand">
-          <Button type="primary">Thêm thương hiệu</Button>
-        </Link>
+        {isAdmin && (
+          <Link to="/add-brand">
+            <Button type="primary">Thêm thương hiệu</Button>
+          </Link>
+        )}
       </div>
 
       <Input.Search

@@ -13,6 +13,9 @@ function CategoryList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const name = searchParams.get("name") || "";
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAdmin = user?.role === "admin";
+
   const fetchCategories = async (): Promise<Category[]> => {
     const res = await fetch(
       `http://localhost:3001/categories?name_like=${name}`
@@ -51,7 +54,10 @@ function CategoryList() {
       title: "Tên danh mục",
       dataIndex: "name",
     },
-    {
+  ];
+
+  if (isAdmin) {
+    columns.push({
       title: "Tùy chọn",
       key: "actions",
       render: (record: Category) => (
@@ -69,8 +75,8 @@ function CategoryList() {
           </Button>
         </div>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <div style={{ padding: 20 }}>
@@ -85,9 +91,11 @@ function CategoryList() {
         }}
       >
         <h2 style={{ margin: 0 }}>Danh sách danh mục</h2>
-        <Link to="/add-category">
-          <Button type="primary">Thêm danh mục</Button>
-        </Link>
+        {isAdmin && (
+          <Link to="/add-category">
+            <Button type="primary">Thêm danh mục</Button>
+          </Link>
+        )}
       </div>
 
       <Input.Search
